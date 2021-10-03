@@ -76,7 +76,7 @@ public class Adventure {
                     break;
 
                 case "exit":
-                    System.out.println("You found the pharaohs grave!");
+                    System.out.println("Thanks for playing! :D");
                     System.exit(0);
                     break;
 
