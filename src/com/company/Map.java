@@ -51,15 +51,15 @@ public class Map {
 
 
         Room2.addNewItem("dirt", "pile of stinky dirt");
-        Room2.addNewItem("3 ting test", "test 3 ting i et rum");
-        Room2.addNewItem("3 ting test", "test 3 ting i et rum");
+        Room2.addNewItem("3tingtest", "test 3 ting i et rum");
+        Room2.addNewItem("3tingtest", "test 3 ting i et rum");
         Room3.addNewItem("spiderweb", "big entaglement of spiderweb");
         Room4.addNewItem("snakeskin", "snake skin from a dead snake carcass");
         Room5.addNewItem("pharaohs staff", "the pharaohs golden staff");
-        Room6.addNewItem("gold coin", "a gold coin found in darkness");
-        Room7.addNewItem("human bones", "bones from recently deceased");
-        Room8.addNewItem("Anubis statue", "statue of the god anubis");
-        Room9.addNewItem("butcher's cleaver", "the pharaohs butcher's cleaver");
+        Room6.addNewItem("coin", "a gold coin found in darkness");
+        Room7.addNewItem("bones", "bones from recently deceased");
+        Room8.addNewItem("statue", "statue of the god anubis");
+        Room9.addNewItem("cleaver", "the pharaohs butcher's cleaver");
     }
     public Room getStartRoom(){
         return startRoom;

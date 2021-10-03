@@ -12,7 +12,9 @@ public class Adventure {
 
 
     public Adventure(){
+        map.createMap();
         startRoom = map.getStartRoom();
+        System.out.println(map.getStartRoom());
         currentRoom = startRoom;
     }
 
@@ -83,13 +85,15 @@ public class Adventure {
                     break;
 
                 case "take":
-                    System.out.println("you picked up: ");
-                    player.takeItem("");
+                    System.out.println("What do you want me to pick up?: ");
+                    String itemToPickUp = input.next();
+                    player.takeItem(currentRoom, itemToPickUp);
                     break;
 
                 case "drop":
-                    System.out.println("You dropped: ");
-                    player.dropItem("");
+                    System.out.println("What do you want to drop?: ");
+                    String itemToDrop = input.next();
+                    player.dropItem(currentRoom, itemToDrop);
                     break;
             }
 

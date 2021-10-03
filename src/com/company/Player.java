@@ -31,22 +31,24 @@ public class Player{
     }
 
 
-    public Item takeItem(String itemName){
-        for(Item item : currentRoom.inventory ) {
+    public Item takeItem(Room playerrooom, String itemName){
+        for(Item item : playerrooom.inventory ) {
             if(item.getItemName().equalsIgnoreCase(itemName)){
-                currentRoom.removeItemFromRoom(item);
                 playerInventory.add(item);
+                playerrooom.removeItemFromRoom(item);
+                System.out.println("You've picked up: " + item.getItemName());
                 return item;
             }
         }
         return null;
     }
 
-    public Item dropItem(String itemName){
+    public Item dropItem(Room playerroom, String itemName){
         for (Item item : playerInventory){
             if (item.getItemName().equalsIgnoreCase(itemName)){
                 playerInventory.remove(item);
-                currentRoom.addItem(item);
+                playerroom.addItem(item);
+                System.out.println("You've dropped: " + itemName);
                 return item;
             }
         }

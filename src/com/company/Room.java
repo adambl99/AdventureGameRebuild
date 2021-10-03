@@ -75,17 +75,17 @@ public class Room {
     }
 
     // Shows if there are intems in the room or not.
-    public void getInventory() {
+    public String getInventory() {
         if(inventory.isEmpty()){
-            System.out.println("There are no items to find here.");
+            return "There are no items to find here.";
         } else {
             for(int i = 0; i < inventory.size(); i++);
-            System.out.println(", are in this area.");
+            return ", are in this area.";
         }
     }
 
     @Override
     public String toString() {
-        return name + "\n" + roomDesc;
+        return name + "\n" + roomDesc + "\n" + inventory.toString();
     }
 }
