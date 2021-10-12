@@ -6,12 +6,22 @@ import java.util.Locale;
 
 public class Player {
 
-     //TODO Error kommer måske fra her
-    private Room currentRoom = null;
+    //TODO Error kommer måske fra her
+    private Room currentRoom;
     private Item equippedWeapon;
-
+    private Map map = new Map();
     private ArrayList<Item> playerInventory = new ArrayList<>();
     private int health;
+
+
+    public Room getCurrentRoom() {
+        this.currentRoom = map.getStartRoom();
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+    }
 
     public void getPlayerInventory() {
         if (playerInventory.isEmpty()) {
@@ -181,34 +191,25 @@ public class Player {
         return this.health;
     }
 
-    public EnemyNPC enemyToAttack(String input){
+    public EnemyNPC enemyToAttack(String input) {
 
         //TODO Error kommer måske fra her
         EnemyNPC enemyToAttack = null;
 
         //Looking for enemyNPC in players currenRoom
-        if (input.length() >= 7){
+        if (input.length() >= 7) {
             String enemyName = input.substring(7);
-            for (int i = 0; i < currentRoom.getEnemies().size(); i++){
-                if (currentRoom.getEnemies().get(i).getEnemyName().contains(enemyName)){
+            for (int i = 0; i < currentRoom.getEnemies().size(); i++) {
+                if (currentRoom.getEnemies().get(i).getEnemyName().contains(enemyName)) {
                     enemyToAttack = currentRoom.getEnemies().get(i);
                 } else {
-                    System.out.println("The enemy " + enemyName + " is not in this room");
+                    return enemyToAttack;
                 }
-            }
-        } else {
-            //TODO Error kommer måske fra her
-            //If there is nothing to attack
-            if (!currentRoom.getEnemies().isEmpty()){
-                enemyToAttack = currentRoom.getEnemies().get(0);
-            }else {
-                System.out.println("Sorry to inform you but there are no enemies in the room");
             }
         }
         return enemyToAttack;
     }
-
-    }
+}
 
 
 

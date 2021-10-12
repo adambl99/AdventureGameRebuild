@@ -36,7 +36,6 @@ public class Map {
         Room9.setWest(Room8);
         Room9.setNorth(Room6);
 
-        startRoom = Room1;
 
 
         //Beskriver rummene
@@ -85,6 +84,7 @@ public class Map {
 
     }
     public Room getStartRoom(){
+        this.startRoom = Room1;
         return startRoom;
     }
 }
