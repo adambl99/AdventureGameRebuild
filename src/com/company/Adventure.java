@@ -5,12 +5,10 @@ import java.util.Scanner;
 public class Adventure {
     Scanner input = new Scanner(System.in);
     Map map = new Map();
-    Player player = new Player();
+    static Player player = new Player();
     Room room = new Room("");
     Room startRoom;
-    Room currentRoom;
-
-
+    static Room currentRoom;
     public Adventure(){
         map.createMap();
         startRoom = map.getStartRoom();
@@ -25,9 +23,15 @@ public class Adventure {
                 "\nNorth: 'go north'\nSouth: 'go south'\nEast: 'go east'\nWest: 'go west'\nYou can also type shortened versions such as: n, s, e, w");
         System.out.println("Good luck, and don't get lost in the darkness.\n");
         System.out.println(currentRoom);
+        player.setHealth(100);
+
 
         while (true) {
             String direction = input.next().trim().toLowerCase(Locale.ROOT);
+            if (player.getHealth() <= 0){
+                System.out.println("You are dead, better luck next time..");
+                System.exit(0);
+            }
             switch (direction) {
                 case "north", "go north", "n":
                     if (currentRoom.getNorth() == null) {
@@ -68,6 +72,7 @@ public class Adventure {
                 case "look":
                     System.out.println(currentRoom);
                     room.getInventory();
+                    room.getEnemies();
                     break;
 
                 case "help":
@@ -85,27 +90,72 @@ public class Adventure {
                     break;
 
                 case "take":
-                    System.out.println("What do you want me to pick up?: ");
                     String itemToPickUp = input.next();
                     player.takeItem(currentRoom, itemToPickUp);
                     break;
 
                 case "drop":
-                    System.out.println("What do you want to drop?: ");
                     String itemToDrop = input.next();
                     player.dropItem(currentRoom, itemToDrop);
                     break;
+
+                case "health":
+                    int playerHitpoints = player.getHealth();
+                    System.out.println("Your HP is: " + playerHitpoints);
+                    System.out.println(player.health());
+                    break;
+                case "eat":
+                    String itemToEat = input.next().trim().toLowerCase(Locale.ROOT);
+                    if (itemToEat.length() > 0){
+                        player.eat(itemToEat);
+                    }
+                    break;
+                case "equip":
+                    String itemToEquip = input.next().trim().toLowerCase(Locale.ROOT);
+                    if (itemToEquip.length() > 0){
+                        player.equip(itemToEquip);
+                    }
+                    break;
+
+                case "attack":
+                    String enemyToAttack = input.next().trim().toLowerCase(Locale.ROOT);
+                     if (currentRoom.getEnemies().size() == 0){
+                         System.out.println("There are no enemies to attack in this room");
+                     }else if (currentRoom.getEnemies().size() == 1){
+                         attackSequence(enemyToAttack);
+                     }
+                     break;
+                }
+
             }
+        }
+        //TODO Error i attackSequence som skaber NullPointerException da currentRoom er null, brug for hjælp
+    //The attack sequence for the game
+    public static void attackSequence (String input){
+    EnemyNPC enemyNPC = player.enemyToAttack(input);
+    if (enemyNPC == null){
+        System.out.println("No enemies in this room");
 
-
+    } else if (((Weapon) player.getEquippedWeapon()).arrowsLeft() > 0){
+        int damageDoneToEnemy = player.attack();
+        enemyNPC.takedamage(damageDoneToEnemy);
+        ((Weapon) player.getEquippedWeapon()).arrowsLeft();
+        System.out.println("You attack: " + enemyNPC.getEnemyName() + " and hit it for " + ((Weapon) player.getEquippedWeapon()).getDamage() + " HP");
+        System.out.println("The enemy: " + enemyNPC.getEnemyName() + " now has " + enemyNPC.getEnemyHealth() + " HP left");
+        if (enemyNPC.getEnemyHealth() >= 0){
+            int damageDoneToPlayer = enemyNPC.attack();
+            player.takeDamage(damageDoneToPlayer);
+            System.out.println("The attacks you for: " + damageDoneToPlayer + " HP");
+            System.out.println("You now have: " + player.getHealth() + " HP Remaining");
+        } else{
+            System.out.println("The enemy succumbs to your strength, you have won the battle adventurer!");
+            currentRoom.removeEnemyNPCfromRoom(enemyNPC.getEnemyName());
         }
 
-
-
+    }
+    }
 
     }
 
 
 
-
-}

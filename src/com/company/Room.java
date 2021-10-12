@@ -14,6 +14,15 @@ public class Room {
 
     public ArrayList<Item> inventory = new ArrayList<>();
 
+    public ArrayList<EnemyNPC> enemies = new ArrayList<>();
+
+    public void addToItem(Item item) {
+        this.inventory.add(item);
+    }
+    public void addEnemyNPC(EnemyNPC enemyNPC){
+        this.enemies.add(enemyNPC);
+    }
+
     public Room(String name){
         this.name = name;
     }
@@ -65,7 +74,7 @@ public class Room {
         inventory.add(item);
     }
 
-    // Removes items, when player picks them up.
+
     public Item removeItemFromRoom(Item item){
         if(inventory.contains(item)){
             inventory.remove(item);
@@ -73,8 +82,22 @@ public class Room {
         }
         return null;
     }
+    public void removeEnemyNPCfromRoom(String enemyName){
+        Weapon weapontoDrop;
 
-    // Shows if there are intems in the room or not.
+        for (int i = 0; i < this.enemies.size(); i++){
+            if (this.enemies.get(i).getEnemyName().contains(enemyName)){
+                weapontoDrop = this.enemies.get(i).getWeapon();
+                addToItem(weapontoDrop);
+                this.enemies.remove(i);
+            }
+        }
+    }
+
+    public ArrayList<EnemyNPC> getEnemies(){
+        return this.enemies;
+    }
+
     public String getInventory() {
         if(inventory.isEmpty()){
             return "There are no items to find here.";
@@ -83,9 +106,8 @@ public class Room {
             return ", are in this area.";
         }
     }
-
-    @Override
     public String toString() {
-        return name + "\n" + roomDesc + "\n" + inventory.toString();
+
+        return name + "\n" + roomDesc + "\n" + inventory.toString() + "\n" + enemies.toString();
     }
 }
