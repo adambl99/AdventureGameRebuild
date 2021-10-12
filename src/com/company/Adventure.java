@@ -122,6 +122,7 @@ public class Adventure {
                      if (currentRoom.getEnemies().size() == 0){
                          System.out.println("There are no enemies to attack in this room");
                      }else if (currentRoom.getEnemies().size() == 1){
+
                          EnemyNPC enemyNPC = player.enemyToAttack(input.next().trim().toLowerCase(Locale.ROOT));
 
                          if (((Weapon) player.getEquippedWeapon()).arrowsLeft() > 0){
@@ -149,31 +150,7 @@ public class Adventure {
 
             }
         }
-        //TODO Error i attackSequence som skaber NullPointerException da currentRoom er null, brug for hjælp
-    //The attack sequence for the game
-    /*public static void attackSequence (String input){
-    EnemyNPC enemyNPC = player.enemyToAttack(input);
-    if (enemyNPC == null){
-        System.out.println("No enemies in this room");
 
-    } else if (((Weapon) player.getEquippedWeapon()).arrowsLeft() > 0){
-        int damageDoneToEnemy = player.attack();
-        enemyNPC.takedamage(damageDoneToEnemy);
-        ((Weapon) player.getEquippedWeapon()).arrowsLeft();
-        System.out.println("You attack: " + enemyNPC.getEnemyName() + " and hit it for " + ((Weapon) player.getEquippedWeapon()).getDamage() + " HP");
-        System.out.println("The enemy: " + enemyNPC.getEnemyName() + " now has " + enemyNPC.getEnemyHealth() + " HP left");
-        if (enemyNPC.getEnemyHealth() >= 0){
-            int damageDoneToPlayer = enemyNPC.attack();
-            player.takeDamage(damageDoneToPlayer);
-            System.out.println("The attacks you for: " + damageDoneToPlayer + " HP");
-            System.out.println("You now have: " + player.getHealth() + " HP Remaining");
-        } else{
-            System.out.println("The enemy succumbs to your strength, you have won the battle adventurer!");
-            currentRoom.removeEnemyNPCfromRoom(enemyNPC.getEnemyName());
-        }
-
-    }
-    }*/
 
 
 
