@@ -191,39 +191,20 @@ public class Player {
         return this.health;
     }
 
+
     public EnemyNPC enemyToAttack(String input, Room currentRoom) {
         EnemyNPC enemyToAttack = null;
-            for (int i = 0; i < currentRoom.getEnemies().size(); i++) {
-                if (currentRoom.getEnemies().get(i).getEnemyName().contains(input)) {
-                    enemyToAttack = currentRoom.getEnemies().get(i);
-                }
+        for (int i = 0; i < currentRoom.getEnemies().size(); i++) {
+                enemyToAttack = currentRoom.getEnemies().get(i);
             }
         return enemyToAttack;
-    }
-
-    public void attackSequence(EnemyNPC enemyNPC) {
-        if (enemyNPC != null) {
-            if (((Weapon) getEquippedWeapon()).arrowsLeft() > 0) {
-                int damageDoneToEnemy = attack();
-                enemyNPC.takedamage(damageDoneToEnemy);
-                ((Weapon) getEquippedWeapon()).arrowsLeft();
-                System.out.println("You attack: " + enemyNPC.getEnemyName() + " and hit it for " + ((Weapon) getEquippedWeapon()).getDamage() + " HP");
-                System.out.println("The enemy: " + enemyNPC.getEnemyName() + " now has " + enemyNPC.getEnemyHealth() + " HP left");
-                if (enemyNPC.getEnemyHealth() >= 0) {
-                    int damageDoneToPlayer = enemyNPC.attack();
-                    takeDamage(damageDoneToPlayer);
-                    System.out.println("The attacks you for: " + damageDoneToPlayer + " HP");
-                    System.out.println("You now have: " + getHealth() + " HP Remaining");
-                } else {
-                    System.out.println("The enemy succumbs to your strength, you have won the battle adventurer!");
-                    currentRoom.removeEnemyNPCfromRoom(enemyNPC.getEnemyName());
-                }
-            }
-        } else {
-            System.out.println("There is no such enemy");
         }
     }
-}
+
+
+
+
+
 
 
 

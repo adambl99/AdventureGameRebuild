@@ -40,4 +40,7 @@ public class EnemyNPC {
     public String toString(){
         return "Enemy: " + enemyName + ", " + enemyDescription + "\nHP: " + hitpoints + "\nWeapon equipped: " + weapon;
 
-}}
+}
+
+
+}
