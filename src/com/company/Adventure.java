@@ -1,4 +1,5 @@
 package com.company;
+
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -9,14 +10,15 @@ public class Adventure {
     Room room = new Room("");
     Room startRoom;
     static Room currentRoom;
-    public Adventure(){
+
+    public Adventure() {
         map.createMap();
         startRoom = map.getStartRoom();
         System.out.println(map.getStartRoom());
         currentRoom = startRoom;
     }
 
-    public void gamePlay(){
+    public void gamePlay() {
         System.out.println("Welcome to Tomb Ascendeance, try to locate the Pharaohs tomb");
         System.out.println("There are 8 rooms in the tomb, maybe the rooms even contains items and artifacts");
         System.out.println("To move between the rooms, type commands like so:" +
@@ -28,7 +30,7 @@ public class Adventure {
 
         while (true) {
             String direction = input.next().trim().toLowerCase(Locale.ROOT);
-            if (player.getHealth() <= 0){
+            if (player.getHealth() <= 0) {
                 System.out.println("You are dead, better luck next time..");
                 System.exit(0);
             }
@@ -106,50 +108,37 @@ public class Adventure {
                     break;
                 case "eat":
                     String itemToEat = input.next().trim().toLowerCase(Locale.ROOT);
-                    if (itemToEat.length() > 0){
+                    if (itemToEat.length() > 0) {
                         player.eat(itemToEat);
                     }
                     break;
                 case "equip":
                     String itemToEquip = input.next().trim().toLowerCase(Locale.ROOT);
-                    if (itemToEquip.length() > 0){
+                    if (itemToEquip.length() > 0) {
                         player.equip(itemToEquip);
                     }
                     break;
 
                 case "attack":
-                    String enemyToAttack = input.next().trim().toLowerCase(Locale.ROOT);
-                     if (currentRoom.getEnemies().size() == 0){
-                         System.out.println("There are no enemies to attack in this room");
-                     }else if (currentRoom.getEnemies().size() == 1){
-
-                         EnemyNPC enemyNPC = player.enemyToAttack(input.next().trim().toLowerCase(Locale.ROOT));
-
-                         if (((Weapon) player.getEquippedWeapon()).arrowsLeft() > 0){
-                             int damageDoneToEnemy = player.attack();
-                             enemyNPC.takedamage(damageDoneToEnemy);
-                             ((Weapon) player.getEquippedWeapon()).arrowsLeft();
-                             System.out.println("You attack: " + enemyNPC.getEnemyName() + " and hit it for " + ((Weapon) player.getEquippedWeapon()).getDamage() + " HP");
-                             System.out.println("The enemy: " + enemyNPC.getEnemyName() + " now has " + enemyNPC.getEnemyHealth() + " HP left");
-                             if (enemyNPC.getEnemyHealth() >= 0){
-                                 int damageDoneToPlayer = enemyNPC.attack();
-                                 player.takeDamage(damageDoneToPlayer);
-                                 System.out.println("The attacks you for: " + damageDoneToPlayer + " HP");
-                                 System.out.println("You now have: " + player.getHealth() + " HP Remaining");
-                             } else{
-                                 System.out.println("The enemy succumbs to your strength, you have won the battle adventurer!");
-                                 currentRoom.removeEnemyNPCfromRoom(enemyNPC.getEnemyName());
-                             }
-                             break;
-
-                         }
-                     }
-                     }
-
-                }
+                    EnemyNPC enemyToAttack = null;
+                    if (currentRoom.getEnemies().size() == 0) {
+                        System.out.println("There are no enemies to attack in this room");
+                    } else {
+                        enemyToAttack = player.enemyToAttack(input.next().trim().toLowerCase(Locale.ROOT) , currentRoom);
+                    }
+                    if (enemyToAttack != null && ((Weapon) player.getEquippedWeapon()).arrowsLeft() > 0) {
+                        player.attackSequence(enemyToAttack);
+                    }
+                    break;
 
             }
         }
+    }
+
+}
+
+
+
 
 
 
